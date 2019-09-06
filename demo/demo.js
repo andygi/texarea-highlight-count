@@ -92,7 +92,7 @@ function textareaHighlight(component) {
     charsLeft = maxLength = Number($textArea.attr(dataAttr));
     $textArea
         .on({
-            'change keyup keydown paste': changeHandler,
+            'change keyup keydown paste input': changeHandler,
             'scroll': handleScroll
         })
         .trigger("change");
