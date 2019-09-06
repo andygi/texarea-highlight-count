@@ -125,6 +125,8 @@ function textareaHighlight(component) {
       }
 }
 
-counterTextArea(".js-counter");
-counterTextAreaHighlight(".js-counter-two");
-textareaHighlight(".js-counter-three");
+$(document).ready(function() {
+    counterTextArea(".js-counter");
+    counterTextAreaHighlight(".js-counter-two");
+    textareaHighlight(".js-counter-three");
+});
