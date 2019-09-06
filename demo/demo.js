@@ -18,6 +18,7 @@ function counterTextArea(component) {
     }
 }
 
+// version #1
 function counterTextAreaHighlight(component) {
     var maxLength = 0;
     var charsLeft = 0;
@@ -40,31 +41,33 @@ function counterTextAreaHighlight(component) {
     function changeHandler(event) {
         var textString = event.currentTarget.textContent;
         var $target = $(event.currentTarget);
-        var textStringFirst = textStringSecond = '';
+        var textStringFirst = (textStringSecond = "");
         var cursorPosition;
 
         var $textAreaInput = $target.parent().find("textarea" + component);
         $textAreaInput.val("");
         if (charsLeft < 0) {
             // add html marker for edit area
-            textStringFirst = textString.substring(0,maxLength);
+            textStringFirst = textString.substring(0, maxLength);
             textStringSecond = textString.substring(maxLength);
-            editTextString = textStringFirst + '<span>' + textStringSecond + '</span>';
+            editTextString =
+                textStringFirst + "<span>" + textStringSecond + "</span>";
             $target.html(editTextString);
             moveCursor(event);
         }
         $textAreaInput.val(textString);
         charsLeft = maxLength - textString.length;
-        var $counter = $target.parent().find('.' + wrapDiv + "__counter");
+        var $counter = $target.parent().find("." + wrapDiv + "__counter");
         $counter.text(charsLeft);
-        console.log(event);
     }
-    
+
     function moveCursor(event) {
-        var totaLength = (event.currentTarget.childNodes[0].length + event.currentTarget.childNodes[1].firstChild.length) - 1;
+        var totaLength =
+            event.currentTarget.childNodes[0].length +
+            event.currentTarget.childNodes[1].firstChild.length -
+            1;
         var range = document.createRange();
         var sel = window.getSelection();
-        console.log('moveCursor', totaLength);
         range.setStart(event.currentTarget.childNodes[1], 1);
         range.collapse(true);
         sel.removeAllRanges();
