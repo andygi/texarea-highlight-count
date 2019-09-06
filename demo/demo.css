@@ -6,3 +6,41 @@
 .test-input span {
     color: red;
 }
+
+.js-texthighlight-wrap {
+    width: 300px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+.js-texthighlight-wrap__counter {
+    position: absolute;
+    background: orange;
+    bottom: 0;
+    z-index: 3;
+    padding: 5px;
+}
+
+.js-texthighlight-wrap textarea {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.js-texthighlight-wrap div {
+    position: absolute;
+    z-index: 1;
+    color: transparent;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.js-texthighlight-wrap div mark{
+    background-color: #b1d5e5;
+}

@@ -42,7 +42,6 @@ function counterTextAreaHighlight(component) {
         var textString = event.currentTarget.textContent;
         var $target = $(event.currentTarget);
         var textStringFirst = (textStringSecond = "");
-        var cursorPosition;
 
         var $textAreaInput = $target.parent().find("textarea" + component);
         $textAreaInput.val("");
@@ -75,5 +74,57 @@ function counterTextAreaHighlight(component) {
     }
 }
 
+// version #2
+function textareaHighlight(component) {
+    var maxLength = 0;
+    var charsLeft = 0;
+    var dataAttr = "data-maxlength";
+    var wrapDiv = "js-texthighlight-wrap";
+    var $textArea = $(component);
+    var $backdrop = $('div' + component);
+    var cssArea = $textArea[0].className;
+
+    $textArea
+        .wrap('<div class="' + wrapDiv + '"></div>')
+        .after('<span class="' + wrapDiv + '__counter"></span>')
+        .after('<div class="' + cssArea + '"></div>');
+
+    charsLeft = maxLength = Number($textArea.attr(dataAttr));
+    $textArea
+        .on({
+            'change keyup keydown paste': changeHandler,
+            'scroll': handleScroll
+        })
+        .trigger("change");
+
+    function changeHandler(event) {
+        var textString = event.currentTarget.value;
+        var $target = $(event.currentTarget);
+        var textStringFirst = (textStringSecond = "");
+
+        var $textAreaInput = $target.parent().find("div" + component);
+        $textAreaInput.html('');
+        if (charsLeft < 0) {
+            // add html marker for edit area
+            textStringFirst = textString.substring(0, maxLength);
+            textStringSecond = textString.substring(maxLength);
+            editTextString = textStringFirst + "<mark>" + textStringSecond + "</mark>";
+            $textAreaInput.html(editTextString);
+        }
+        charsLeft = maxLength - textString.length;
+        var $counter = $target.parent().find("." + wrapDiv + "__counter");
+        $counter.text(charsLeft);
+    }
+
+    function handleScroll() {
+        var scrollTop = $(component).scrollTop();
+        $backdrop.scrollTop(scrollTop);
+        
+        var scrollLeft = $(component).scrollLeft();
+        $backdrop.scrollLeft(scrollLeft);  
+      }
+}
+
 counterTextArea(".js-counter");
 counterTextAreaHighlight(".js-counter-two");
+textareaHighlight(".js-counter-three");
