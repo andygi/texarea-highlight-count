@@ -76,12 +76,11 @@ function counterTextAreaHighlight(component) {
 
 // version #2
 function textareaHighlight(component) {
-    var maxLength = 0;
     var charsLeft = 0;
     var dataAttr = "data-maxlength";
     var wrapDiv = "js-texthighlight-wrap";
     var $textArea = $(component);
-    var $backdrop = $('div' + component);
+    var $backdrop = $("div" + component);
     var cssArea = $textArea[0].className;
 
     $textArea
@@ -89,29 +88,30 @@ function textareaHighlight(component) {
         .after('<span class="' + wrapDiv + '__counter"></span>')
         .after('<div class="' + cssArea + '"></div>');
 
-    charsLeft = maxLength = Number($textArea.attr(dataAttr));
+    charsLeft = Number($(this).attr(dataAttr));
     $textArea
         .on({
-            'change keyup keydown paste input': changeHandler,
-            'scroll': handleScroll
+            "change keyup keydown paste input": changeHandler,
+            scroll: handleScroll
         })
         .trigger("change");
 
     function changeHandler(event) {
+        var maxLength = event.currentTarget.dataset.maxlength;
         var textString = event.currentTarget.value;
         var $target = $(event.currentTarget);
         var textStringFirst = (textStringSecond = "");
 
         var $textAreaInput = $target.parent().find("div" + component);
-        $textAreaInput.html('');
+        $textAreaInput.html("");
         if (charsLeft < 0) {
             textStringFirst = textString.substring(0, maxLength);
             textStringSecond = textString.substring(maxLength);
             // add new line in case there is
-            textStringFirst = textStringFirst.replace(/\n/g, '<br/>');
-            textStringSecond = textStringSecond.replace(/\n/g, '<br/>');
+            textStringFirst = textStringFirst.replace(/\n/g, "<br/>");
+            textStringSecond = textStringSecond.replace(/\n/g, "<br/>");
             // add html marker for edit area
-            editTextString = textStringFirst + '<mark>' + textStringSecond + '</mark>';
+            editTextString = textStringFirst + "<mark>" + textStringSecond + "</mark>";
             $textAreaInput.html(editTextString);
         }
         charsLeft = maxLength - textString.length;
@@ -122,10 +122,10 @@ function textareaHighlight(component) {
     function handleScroll() {
         var scrollTop = $(component).scrollTop();
         $backdrop.scrollTop(scrollTop);
-        
+
         var scrollLeft = $(component).scrollLeft();
-        $backdrop.scrollLeft(scrollLeft);  
-      }
+        $backdrop.scrollLeft(scrollLeft);
+    }
 }
 
 $(document).ready(function() {
