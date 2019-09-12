@@ -80,13 +80,12 @@ function textareaHighlight(component) {
     var dataAttr = "data-maxlength";
     var wrapDiv = "js-texthighlight-wrap";
     var $textArea = $(component);
-    var $backdrop = $("div" + component);
     var cssArea = $textArea[0].className;
 
     $textArea
         .wrap('<div class="' + wrapDiv + '"></div>')
         .after('<span class="' + wrapDiv + '__counter"></span>')
-        .after('<div class="' + cssArea + '"></div>');
+        .after('<div class="' + wrapDiv + '__backdrop"><div class="' + cssArea + '"></div></div>');
 
     charsLeft = Number($(this).attr(dataAttr));
     $textArea
@@ -119,12 +118,12 @@ function textareaHighlight(component) {
         $counter.text(charsLeft);
     }
 
-    function handleScroll() {
-        var scrollTop = $(component).scrollTop();
-        $backdrop.scrollTop(scrollTop);
-
-        var scrollLeft = $(component).scrollLeft();
-        $backdrop.scrollLeft(scrollLeft);
+    function handleScroll(event) {
+        var scrollTop = event.currentTarget.scrollTop;
+        $(this).next().scrollTop(scrollTop);
+        
+        var scrollLeft = event.currentTarget.scrollLeft;
+        $(this).next().scrollLeft(scrollLeft);
     }
 }
 
