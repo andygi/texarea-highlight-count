@@ -105,10 +105,13 @@ function textareaHighlight(component) {
         var $textAreaInput = $target.parent().find("div" + component);
         $textAreaInput.html('');
         if (charsLeft < 0) {
-            // add html marker for edit area
             textStringFirst = textString.substring(0, maxLength);
             textStringSecond = textString.substring(maxLength);
-            editTextString = textStringFirst + "<mark>" + textStringSecond + "</mark>";
+            // add new line in case there is
+            textStringFirst = textStringFirst.replace(/\n/g, '<br/>');
+            textStringSecond = textStringSecond.replace(/\n/g, '<br/>');
+            // add html marker for edit area
+            editTextString = textStringFirst + '<mark>' + textStringSecond + '</mark>';
             $textAreaInput.html(editTextString);
         }
         charsLeft = maxLength - textString.length;
